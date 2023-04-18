@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Welcome{% endblock %}</title>
+    <link href="/static/bootstrap-5.2.0-dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <script src="/static/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
+    <!-- stylesheets from inherited templates -->
+    {% block site_css %}
+    {% endblock site_css %}
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg bg-light">
+            <div class="container">
+                <a class="navbar-brand" href="/">ЛР№5 <small>trading</small></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="me-auto"></ul>
+                    <ul class="navbar-nav mb-2 mb-lg-0 text-end">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Контрагенти</a>
+                            <ul class="dropdown-menu">
+                                <li><h6 class="dropdown-header">Довідники</h6></li>
+                                <li><a class="dropdown-item" href="{{ url_for('partner_page.view_list') }}">Контрагенти</a></li>
+                                <li><a class="dropdown-item" href="{{ url_for('contact_page.view_list') }}">Контакти/адреси</a></li>
+                                <li><a class="dropdown-item" href="{{ url_for('bank_page.view_list') }}">Банківськи рахунки</a></li>
+                                <li><h6 class="dropdown-header">Створити</h6></li>
+                                <li><a class="dropdown-item" href="{{ url_for('partner_page.view_create') }}">Контрагента</a></li>
+                                <li><a class="dropdown-item" href="{{ url_for('contact_page.view_create') }}">Контакт</a></li>
+                                <li><a class="dropdown-item" href="{{ url_for('bank_page.view_create') }}">Банківський рахунок</a></li>
+                            </ul>
+                        </li>
+
+                        <!--
+                        <li class="nav-item">
+                            <a class="nav-link disabled">sad asd as ds</a>
+                        </li>
+                            <li class="nav-item">
+                                <a href="{{ url_for('partner_page.view_list') }}" class="nav-link">Partners</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="#" class="nav-link"><i class="bi-box-arrow-in-right"></i> sadasd</a>
+                            </li>
+                        -->
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+    <div class="container mt-5">
+        {% if error %}
+        <div class="row"><div class="col">
+            <div class="alert alert-danger" role="alert">
+               {{ error }}
+            </div>
+        </div></div>
+        {% endif %}
+
+        <div class="row">
+            <div class="col">
+
+{% block content %}
+
+{% endblock %}
+            </div>
+        </div>
+    </div>
+    </main>
+<script src="/static/bootstrap-5.2.0-dist/js/bootstrap.bundle.min.js"></script>
+{% block site_js %}{% endblock site_js %}
+</body>
+</html>

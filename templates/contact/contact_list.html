@@ -1,0 +1,38 @@
+{% extends 'layout.html' %}
+
+{% block pagetitle %}Контакти/адреси{% endblock %}
+
+{% block content %}
+    <h2>Контакти/адреси</h2>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Тип</th>
+                <th>Контрагент</th>
+                <th>Адреса</th>
+                <th>Коментарій</th>
+                <th>Телефон</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for rec in contacts %}
+            <tr>
+                <td>{{ rec.id }}</td>
+                <td>{{ rec.type }}</td>
+                <td>{{ rec.partner_name }}</td>
+                <td>{{ rec.address or '' }}</td>
+                <td>{{ rec.name }}</td>
+                <td>{{ rec.phone or '' }}</td>
+                <td class="text-end">
+                    <a href="{{ url_for('partner_page.view_detail', partner_id=rec.partner_id) }}" class="btn btn-sm btn-outline-primary">Деталі контрагента</a>
+                    <a href="{{ url_for('contact_page.view_delete', contact_id=rec.id) }}" class="btn btn-sm btn-outline-danger">Видалити</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

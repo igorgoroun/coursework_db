@@ -1,0 +1,72 @@
+{% extends 'layout.html' %}
+
+{% block pagetitle %}Counterparty detail{% endblock %}
+
+{% block content %}
+    <h2>{{ partner.name }}</h2>
+
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <dl class="row">
+                <dt class="col-sm-4">ID</dt>
+                <dd class="col-sm-8">{{ partner.id }}</dd>
+                <dt class="col-sm-4">Інкотермс</dt>
+                <dd class="col-sm-8">{{ partner.default_incoterm }}</dd>
+                <dt class="col-sm-4">Умови оплати</dt>
+                <dd class="col-sm-8">{{ partner.default_payment_term }}</dd>
+            </dl>
+        </div>
+        <div class="col-12 col-md-6 text-end">
+            <a href="{{ url_for('partner_page.view_modify', partner_id=partner.id) }}" class="btn btn-sm btn-outline-warning">Редагувати</a>
+            <a href="{{ url_for('partner_page.view_delete', partner_id=partner.id) }}" class="btn btn-sm btn-outline-danger">Видалити</a>
+        </div>
+    </div>
+    <br><br>
+
+    <h3>Контакти <a href="{{ url_for('contact_page.view_create', partner_id=partner.id) }}" class="btn btn-sm btn-outline-secondary">Додати новий</a></h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Опис/Імʼя</th>
+                <th>Тип</th>
+                <th>Адреса</th>
+                <th>Телефон</th>
+                <th> </th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for contact in contacts %}
+            <tr>
+                <td>{{ contact.id }}</td>
+                <td>{{ contact.name }}</td>
+                <td>{{ contact.type }}</td>
+                <td>{{ contact.address or '' }}</td>
+                <td>{{ contact.phone or '' }}</td>
+                <td class="text-end"><a href="{{ url_for('contact_page.view_delete', contact_id=contact.id) }}" class="btn btn-sm btn-outline-danger">Видалити</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% if not contacts %}
+        <p class="text-danger">Немає контактів!</p>
+    {% endif %}
+    <br><br>
+
+    <h3>Банківські рахунки <a href="{{ url_for('bank_page.view_create', partner_id=partner.id) }}" class="btn btn-sm btn-outline-secondary">Додати новий</a></h3>
+    <table class="table">
+        <tbody>
+        {% for bank in banks %}
+            <tr>
+                <td>{{ bank.id }}</td>
+                <td>{{ bank.iban }}</td>
+                <td class="text-end"><a href="{{ url_for('bank_page.view_delete', bank_id=bank.id) }}" class="btn btn-sm btn-outline-danger">Видалити</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% if not banks %}
+        <p class="text-danger">Немає банківських рахунків!</p>
+    {% endif %}
+
+{% endblock %}

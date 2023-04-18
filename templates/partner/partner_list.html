@@ -1,0 +1,39 @@
+{% extends 'layout.html' %}
+
+{% block pagetitle %}Контрагенти{% endblock %}
+
+{% block content %}
+    <h2>Контрагенти</h2>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Назва</th>
+                <th>Інкотерм</th>
+                <th>Умови оплати</th>
+                <th>Контактів</th>
+                <th>Банк.аккаунтів</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for partner in partners %}
+            <tr>
+                <td>{{ partner.id }}</td>
+                <td>{{ partner.name }}</td>
+                <td>{{ partner.default_incoterm }}</td>
+                <td>{{ partner.default_payment_term }}</td>
+                <td>{{ partner.contacts_count }}</td>
+                <td>{{ partner.banks_count }}</td>
+                <td class="text-end">
+                    <a href="{{ url_for('partner_page.view_detail', partner_id=partner.id) }}" class="btn btn-sm btn-outline-primary">Детальніше</a>
+                    <a href="{{ url_for('partner_page.view_modify', partner_id=partner.id) }}" class="btn btn-sm btn-outline-warning">Редагувати</a>
+                    <a href="{{ url_for('partner_page.view_delete', partner_id=partner.id) }}" class="btn btn-sm btn-outline-danger">Видалити</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

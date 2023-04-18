@@ -1,0 +1,49 @@
+{% extends 'layout.html' %}
+
+{% block pagetitle %}Форма контакта{% endblock %}
+
+{% block content %}
+    <h2>Контакт/адреса</h2>
+
+    {% if partner %}
+    <h3>{{ partner.name }}</h3>
+    {% endif %}
+
+    <form action="" role="form" method="post">
+    {% if partners %}
+        <div class="mb-3">
+            <label for="contactPartner" class="form-label">Оберіть партнера</label>
+            <select name="partner_id" class="form-select" id="contactPartner">
+                {% for p in partners %}
+                    <option value="{{ p.id }}" {% if p.id == form.partner_id %}selected{% endif %}>{{ p.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    {% elif partner %}
+        <input type="hidden" name="partner_id" value="{{ partner.id }}">
+    {% endif %}
+        <div class="mb-3">
+            <label for="contactType" class="form-label">Тип адреси/контакта</label>
+            <select name="type" class="form-select" id="contactType">
+                {% for t in types %}
+                    <option value="{{ t }}" {% if t == form.type %}selected{% endif %}>{{ t }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="contactName" class="form-label">Імʼя/Коментарій</label>
+            <input type="text" class="form-control" id="contactName" name="name" placeholder="" value="{{ form.name }}">
+        </div>
+        <div class="mb-3">
+            <label for="contactAddress" class="form-label">Адреса</label>
+            <input type="text" class="form-control" id="contactAddress" name="address" placeholder="" value="{{ form.address }}">
+        </div>
+        <div class="mb-3">
+            <label for="contactPhone" class="form-label">Телефон</label>
+            <input type="text" class="form-control" id="contactPhone" name="address" placeholder="" value="{{ form.phone }}">
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+
+
+{% endblock %}
