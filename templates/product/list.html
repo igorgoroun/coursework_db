@@ -1,0 +1,39 @@
+{% extends 'layout.html' %}
+
+{% block pagetitle %}Довідник товарів{% endblock %}
+
+{% block content %}
+    <h2>Товари <a href="{{ url_for('product_page.view_create') }}" class="btn btn-sm btn-outline-secondary">Створити</a></h2>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>SKU (Артикул)</th>
+                <th>Категорія</th>
+                <th>Бренд</th>
+                <th>Модель</th>
+                <th>RRP</th>
+{#                <th>Атрібути</th>#}
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for product in products %}
+            <tr>
+                <td>{{ product.id }}</td>
+                <td>{{ product.sku }}</td>
+                <td>{{ product.category }}</td>
+                <td>{{ product.brand }}</td>
+                <td>{{ product.model }}</td>
+                <td>{{ product.rrp }}</td>
+                <td class="text-end">
+                    <a href="{{ url_for('product_page.view_detail', product_id=product.id) }}" class="btn btn-sm btn-outline-primary">Налаштування</a>
+                    <a href="{{ url_for('product_page.view_delete', product_id=product.id) }}" onclick="return confirm('Ви впевнені що бажаєте видалити?');" class="btn btn-sm btn-outline-danger">Видалити</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

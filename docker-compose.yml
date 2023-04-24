@@ -1,8 +1,9 @@
 version: '3.8'
 services:
-  labdbpostgres:
+  postgres:
     image: postgres:13
-    restart: always
+    container_name: coursework_db
+    restart: unless-stopped
     user: "501:20"
     environment:
       POSTGRES_DB: "lab_db"
@@ -14,5 +15,5 @@ services:
     volumes:
       -
         type: bind
-        source: ./postgres_db
+        source: ./.postgres
         target: /var/lib/postgresql/data

@@ -1,0 +1,56 @@
+{% extends 'layout.html' %}
+
+{% block pagetitle %}Товар{% endblock %}
+
+{% block content %}
+    <h2>Товар</h2>
+
+    <form action="" role="form" method="post">
+        <div class="row">
+            <div class="mb-3 col-6 col-lg-4">
+                <label for="prodType" class="form-label">Вид продукта</label>
+                <select name="product_type" class="form-select" id="prodType">
+                    {% for inc in product_types %}
+                        <option value="{{ inc }}" {% if inc == form.product_type %}selected{% endif %}>{{ inc }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-3 col-6 col-lg-4">
+                <label for="catName" class="form-label">Категорія</label>
+                <select name="category_id" class="form-select" id="catName">
+                    {% for cat in categories %}
+                        <option value="{{ cat.id }}" {% if cat.id == form.category_id %}selected{% endif %}>{{ cat.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="mb-3 col-6 col-lg-4">
+                <label for="brandName" class="form-label">Бренд</label>
+                <select name="brand_id" class="form-select" id="brandName">
+                    {% for brand in brands %}
+                        <option value="{{ brand.id }}" {% if brand.id == form.brandy_id %}selected{% endif %}>{{ brand.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-3 col-6 col-lg-4">
+                <label for="prodModel" class="form-label">Модель</label>
+                <input type="text" class="form-control" id="prodModel" name="model" placeholder="Модель товара" value="{{ form.model }}">
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="mb-3 col-7 col-lg-5">
+                <label for="prodSKU" class="form-label">Код (артикул) товара</label>
+                <input type="text" class="form-control" id="prodSKU" name="sku" placeholder="Унікальний код товара" value="{{ form.sku }}">
+            </div>
+            <div class="mb-3 col-5 col-lg-3">
+                <label for="prodRRP" class="form-label">Рек.ціна</label>
+                <input type="text" class="form-control" id="prodRRP" name="rrp" placeholder="0.0" value="{{ form.rrp }}">
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+
+
+{% endblock %}

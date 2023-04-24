@@ -1,0 +1,42 @@
+{% extends 'layout.html' %}
+
+{% block pagetitle %}{{ page_title }}{% endblock %}
+
+{% block content %}
+    <h2>{{ page_title }}</h2>
+
+    <form action="" role="form" method="post">
+        <div class="row">
+            <div class="mb-3 col-12 col-lg-8">
+                <label for="orderPartner" class="form-label">Постачальник</label>
+                <select name="partner_id" class="form-select" id="orderPartner">
+                    {% for partner in partners %}
+                        <option value="{{ partner.id }}" {% if partner.id == form.partner_id %}selected{% endif %}>{{ partner.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="mb-3 col-6 col-lg-4">
+                <label for="orderIncoterm" class="form-label">Incoterms</label>
+                <select name="incoterm" class="form-select" id="orderIncoterm">
+                    {% for inc in incoterms %}
+                        <option value="{{ inc }}" {% if inc == form.incoterm %}selected{% endif %}>{{ inc }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-3 col-6 col-lg-4">
+                <label for="orderPayterm" class="form-label">Умови оплати</label>
+                <select name="payment_term" class="form-select" id="orderPayterm">
+                    {% for inc in payterms %}
+                        <option value="{{ inc }}" {% if inc == form.payment_term %}selected{% endif %}>{{ inc }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+
+
+{% endblock %}

@@ -69,12 +69,14 @@ def create(table_name: str, return_id=True, **kwargs) -> int:
     fn, fp, fv, fu = _prepare_fields(**kwargs)
     query = """insert into {} ({}) values ({}) {}""".format(table_name, fn, fp, 'returning id' if return_id else '')
     _logger.warning(f"Create query, params: {query}, {fv}")
+    res = None
     with db.cursor() as cr:
         cr.execute(query, fv)
-        res = cr.fetchone()
-        if type(res) in [tuple, list, set] and len(res) > 0:
-            res = res[0]
-        _logger.warning(f"Created record id: {res}")
+        if return_id:
+            res = cr.fetchone()
+            if type(res) in [tuple, list, set] and len(res) > 0:
+                res = res[0]
+            _logger.warning(f"Created record id: {res}")
     db.commit()
     return res
 
@@ -89,6 +91,20 @@ def unlink(table_name: str, record_id: int) -> bool:
             cr.execute(query, params)
     except ProgrammingError as pe:
         _logger.warning(f"Delete error: {str(pe)}")
+        return False
+    finally:
+        db.commit()
+    return True
+
+
+def execute(query, params: list):
+    db = get_db()
+    _logger.warning(f"Execute query, params: {query}, {params}")
+    try:
+        with db.cursor() as cr:
+            cr.execute(query, params)
+    except ProgrammingError as pe:
+        _logger.warning(f"Execution error: {str(pe)}")
         return False
     finally:
         db.commit()

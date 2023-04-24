@@ -1,6 +1,6 @@
 {% extends 'layout.html' %}
 
-{% block pagetitle %}Counterparty detail{% endblock %}
+{% block pagetitle %}Контрагент{% endblock %}
 
 {% block content %}
     <h2>{{ partner.name }}</h2>
@@ -43,7 +43,7 @@
                 <td>{{ contact.type }}</td>
                 <td>{{ contact.address or '' }}</td>
                 <td>{{ contact.phone or '' }}</td>
-                <td class="text-end"><a href="{{ url_for('contact_page.view_delete', contact_id=contact.id) }}" class="btn btn-sm btn-outline-danger">Видалити</a></td>
+                <td class="text-end"><a href="{{ url_for('contact_page.view_delete', contact_id=contact.id) }}" onclick="return confirm('Ви впевнені що бажаєте видалити?');" class="btn btn-sm btn-outline-danger">Видалити</a></td>
             </tr>
         {% endfor %}
         </tbody>
@@ -60,7 +60,7 @@
             <tr>
                 <td>{{ bank.id }}</td>
                 <td>{{ bank.iban }}</td>
-                <td class="text-end"><a href="{{ url_for('bank_page.view_delete', bank_id=bank.id) }}" class="btn btn-sm btn-outline-danger">Видалити</a></td>
+                <td class="text-end"><a href="{{ url_for('bank_page.view_delete', bank_id=bank.id) }}" onclick="return confirm('Ви впевнені що бажаєте видалити?');" class="btn btn-sm btn-outline-danger">Видалити</a></td>
             </tr>
         {% endfor %}
         </tbody>

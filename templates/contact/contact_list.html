@@ -3,7 +3,7 @@
 {% block pagetitle %}Контакти/адреси{% endblock %}
 
 {% block content %}
-    <h2>Контакти/адреси</h2>
+    <h2>Контакти/адреси <a href="{{ url_for('contact_page.view_create') }}" class="btn btn-sm btn-outline-secondary">Створити</a></h2>
 
     <table class="table">
         <thead>
@@ -28,7 +28,7 @@
                 <td>{{ rec.phone or '' }}</td>
                 <td class="text-end">
                     <a href="{{ url_for('partner_page.view_detail', partner_id=rec.partner_id) }}" class="btn btn-sm btn-outline-primary">Деталі контрагента</a>
-                    <a href="{{ url_for('contact_page.view_delete', contact_id=rec.id) }}" class="btn btn-sm btn-outline-danger">Видалити</a>
+                    <a href="{{ url_for('contact_page.view_delete', contact_id=rec.id) }}" onclick="return confirm('Ви впевнені що бажаєте видалити?');" class="btn btn-sm btn-outline-danger">Видалити</a>
                 </td>
             </tr>
         {% endfor %}

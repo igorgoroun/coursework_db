@@ -1,0 +1,29 @@
+{% extends 'layout.html' %}
+
+{% block pagetitle %}Атрібути товарів{% endblock %}
+
+{% block content %}
+    <h2>Атрібути товарів <a href="{{ url_for('attribute_page.view_create') }}" class="btn btn-sm btn-outline-secondary">Створити</a></h2>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Назва атрібута</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for attribute in attributes %}
+            <tr>
+                <td>{{ attribute.id }}</td>
+                <td>{{ attribute.name }}</td>
+                <td class="text-end">
+                    <a href="{{ url_for('attribute_page.view_delete', attribute_id=attribute.id) }}" onclick="return confirm('Ви впевнені що бажаєте видалити?');" class="btn btn-sm btn-outline-danger">Видалити</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

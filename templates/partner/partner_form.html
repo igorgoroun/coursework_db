@@ -10,22 +10,25 @@
             <label for="partnerName" class="form-label">Назва партнера</label>
             <input type="text" class="form-control" id="partnerName" name="name" placeholder="ООО Рогикопита" value="{{ form.name }}">
         </div>
-        <div class="mb-3">
-            <label for="partnerDefIncoterm" class="form-label">Дефолтний Інкотерм</label>
+    <div class="row">
+
+        <div class="mb-3 col-6">
+            <label for="partnerDefIncoterm" class="form-label">Incoterms за замовчуванням</label>
             <select name="default_incoterm" class="form-select" id="partnerDefIncoterm">
                 {% for inc in incoterms %}
                     <option value="{{ inc }}" {% if inc == form.default_incoterm %}selected{% endif %}>{{ inc }}</option>
                 {% endfor %}
             </select>
         </div>
-        <div class="mb-3">
-            <label for="partnerDefPaymentTerm" class="form-label">Дефолтний Пеймент Терм</label>
+        <div class="mb-3 col-6">
+            <label for="partnerDefPaymentTerm" class="form-label">Payment term за замовчуванням</label>
             <select name="default_payment_term" class="form-select" id="partnerDefPaymentTerm">
                 {% for pt in payment_terms %}
                     <option value="{{ pt }}" {% if pt == form.default_payment_term %}selected{% endif %}>{{ pt }}</option>
                 {% endfor %}
             </select>
         </div>
+    </div>
         <button type="submit" class="btn btn-primary">Save</button>
     </form>
 

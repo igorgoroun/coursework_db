@@ -1,0 +1,45 @@
+{% extends 'layout.html' %}
+
+{% block pagetitle %}Налаштування продукта{% endblock %}
+
+{% block content %}
+    <h2>{{ product.sku }}</h2>
+    <div class="row">
+        <div class="col-5 col-sm-5 col-lg-4">
+            <h5>Налаштовані атрибути</h5>
+            <ul class="list-group list-group-flush">
+            {% for a_attr in applied_attrs %}
+                <li class="list-group-item">
+                    <a href="{{ url_for('attribute_page.remove_from_product', product_id=a_attr.product_id, category_attribute_id=a_attr.category_attribute_id) }}" class="btn btn-sm btn-outline-danger">&cross;</a>
+                    {{ a_attr.name }}: <strong>{{ a_attr.value }}</strong>
+                </li>
+            {% endfor %}
+            </ul>
+        </div>
+        <div class="col-7 col-sm-7 col-lg-8">
+            <h5>Доступні атрибути</h5>
+
+            <ul class="list-group list-group-flush">
+            {% for u_attr in not_applied_attrs %}
+
+                <li class="list-group-item">
+                    <form action="{{ url_for('attribute_page.apply_to_product', product_id=product.id, category_attribute_id=u_attr.id) }}" method="post" class="row row-cols-lg-auto g-3 align-items-center">
+                        <div class="col-auto">
+                            <input type="text" class="form-control" name="value" id="" placeholder="Значення атрибута">
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-sm btn-outline-success">&larr;</button>
+                        </div>
+                        <div class="col-6">
+                            {{ u_attr.name }}
+                        </div>
+                    </form>
+                </li>
+
+            {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+
+{% endblock %}

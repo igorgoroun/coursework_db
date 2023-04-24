@@ -3,7 +3,7 @@
 {% block pagetitle %}Банківські рахунки{% endblock %}
 
 {% block content %}
-    <h2>Банківські рахунки</h2>
+    <h2>Банківські рахунки <a href="{{ url_for('bank_page.view_create') }}" class="btn btn-sm btn-outline-secondary">Створити</a></h2>
 
     <table class="table">
         <thead>
@@ -22,7 +22,7 @@
                 <td>{{ bank.partner_name }}</td>
                 <td class="text-end">
                     <a href="{{ url_for('partner_page.view_detail', partner_id=bank.partner_id) }}" class="btn btn-sm btn-outline-primary">Деталі контрагента</a>
-                    <a href="{{ url_for('bank_page.view_delete', bank_id=bank.id) }}" class="btn btn-sm btn-outline-danger">Видалити</a>
+                    <a href="{{ url_for('bank_page.view_delete', bank_id=bank.id) }}" onclick="return confirm('Ви впевнені що бажаєте видалити?');" class="btn btn-sm btn-outline-danger">Видалити</a>
                 </td>
             </tr>
         {% endfor %}

@@ -1,0 +1,105 @@
+{% extends 'layout.html' %}
+
+{% block pagetitle %}{{ page_title }}{% endblock %}
+
+{% block content %}
+    <h2>{{ page_title }} №{{ order.id }}</h2>
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <dl class="row">
+                <dt class="col-sm-4">Контрагент</dt>
+                <dd class="col-sm-8">{{ partner.name }}</dd>
+                <dt class="col-sm-4">Інкотермс</dt>
+                <dd class="col-sm-8">{{ order.incoterm }}</dd>
+                <dt class="col-sm-4">Умови оплати</dt>
+                <dd class="col-sm-8">{{ order.payment_term }}</dd>
+            </dl>
+        </div>
+    </div>
+    <br>
+
+    <div class="row">
+        <div class="col-12">
+            <h5>Товари в ордері</h5>
+            {% if moves %}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Артикул</th>
+                        <th>Категорія</th>
+                        <th>Бренд</th>
+                        <th>Модель</th>
+                        <th>Ціна</th>
+                        <th>Кількість</th>
+                        <th>Загалом</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for move in moves %}
+                    <tr>
+                        <td>{{ move.sku }}</td>
+                        <td>{{ move.category }}</td>
+                        <td>{{ move.brand }}</td>
+                        <td>{{ move.model }}</td>
+                        <td>{{ move.unit_price }}</td>
+                        <td>{{ move.qty_draft }}</td>
+                        <td>{{ move.amount }}</td>
+                    </tr>
+                {% endfor %}
+                    <tr>
+                        <td colspan="6" class="text-end text-info border-bottom-0">Всього</td>
+                        <td class="text-info fw-bold border-bottom-0">{{ total_amount }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            {% else %}
+                Немає товарів. Додайте через пошук нижче.
+            {% endif %}
+            <br/><br/>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <h5>Додати в ордер</h5>
+            <form action="" method="get" class="row row-cols-lg-auto g-3 align-items-center">
+                <div class="col-auto">
+                    <input type="text" class="form-control" name="product_name" value="{{ product_name }}" id="" placeholder="Назва продукта">
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-sm btn-outline-success">&rarr; пошук</button>
+                </div>
+            </form>
+            <br/>
+            {% if products %}
+            <ul class="list-group list-group-flush">
+            {% for product in products %}
+
+                <li class="list-group-item">
+                    <form action="{{ url_for('move_page.add_to_order', order_id=order.id) }}" method="post" class="row row-cols-lg-auto g-3 align-items-center">
+                        <input type="hidden" name="product_id" value="{{ product.id }}">
+                        <div class="col-auto">
+                            {{ product.category }}
+                        </div>
+                        <div class="col-auto">
+                            {{ product.brand }} {{ product.model }} {{ product.sku }}
+                        </div>
+                        <div class="col-auto">
+                            <input type="text" class="form-control" name="unit_price" placeholder="Ціна за од.">
+                        </div>
+                        <div class="col-auto">
+                            <input type="text" class="form-control" name="qty_draft" placeholder="Кількість">
+                        </div>
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-sm btn-outline-success">&larr; додати в ордер</button>
+                        </div>
+                    </form>
+                </li>
+
+            {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'layout.html' %}
+
+{% block pagetitle %}Атрібути категорії{% endblock %}
+
+{% block content %}
+    <h2>{{ category.name }}</h2>
+    <div class="row">
+        <div class="col-6 col-sm-6">
+            <h5>Налаштовані атрибути</h5>
+            <ul class="list-group list-group-flush">
+            {% for a_attr in applied_attrs %}
+                <li class="list-group-item"><a href="{{ url_for('attribute_page.remove_from_category', attribute_id=a_attr.id, category_id=category.id) }}" class="btn btn-sm btn-outline-danger">&cross;</a> {{ a_attr.name }}</li>
+            {% endfor %}
+            </ul>
+        </div>
+        <div class="col-6 col-sm-6">
+            <h5>Доступні атрибути</h5>
+
+            <ul class="list-group list-group-flush">
+            {% for u_attr in not_applied_attrs %}
+                <li class="list-group-item"><a href="{{ url_for('attribute_page.apply_to_category', attribute_id=u_attr.id, category_id=category.id) }}" class="btn btn-sm btn-outline-success">&larr;</a> {{ u_attr.name }}</li>
+            {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+
+{% endblock %}

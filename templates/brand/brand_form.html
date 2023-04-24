@@ -1,0 +1,17 @@
+{% extends 'layout.html' %}
+
+{% block pagetitle %}Форма бренду{% endblock %}
+
+{% block content %}
+    <h2>Бренд</h2>
+
+    <form action="" role="form" method="post">
+        <div class="mb-3">
+            <label for="brandName" class="form-label">Назва бренду</label>
+            <input type="text" class="form-control" id="brandName" name="name" placeholder="Asus" value="{{ form.name }}">
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+
+
+{% endblock %}

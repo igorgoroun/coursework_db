@@ -1,0 +1,29 @@
+{% extends 'layout.html' %}
+
+{% block pagetitle %}Бренди{% endblock %}
+
+{% block content %}
+    <h2>Бренди <a href="{{ url_for('brand_page.view_create') }}" class="btn btn-sm btn-outline-secondary">Створити</a></h2>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Назва бренду</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for brand in brands %}
+            <tr>
+                <td>{{ brand.id }}</td>
+                <td>{{ brand.name }}</td>
+                <td class="text-end">
+                    <a href="{{ url_for('brand_page.view_delete', brand_id=brand.id) }}" onclick="return confirm('Ви впевнені що бажаєте видалити?');" class="btn btn-sm btn-outline-danger">Видалити</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
