@@ -10,6 +10,7 @@ from product.product import product_app
 from order.purchase import purchase_app
 from order.order import order_app
 from order.move import move_app
+from stock.stock import stock_app
 
 app = Flask(__name__)
 app.register_blueprint(partner_page)
@@ -22,6 +23,7 @@ app.register_blueprint(product_app)
 app.register_blueprint(order_app)
 app.register_blueprint(move_app)
 app.register_blueprint(purchase_app)
+app.register_blueprint(stock_app)
 
 
 @app.teardown_appcontext

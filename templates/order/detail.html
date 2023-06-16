@@ -3,17 +3,43 @@
 {% block pagetitle %}{{ page_title }}{% endblock %}
 
 {% block content %}
-    <h2>{{ page_title }} №{{ order.id }}</h2>
+    <h2 class="mb-4">{{ page_title }} №{{ order.id }}</h2>
     <div class="row">
         <div class="col-12 col-md-6">
             <dl class="row">
                 <dt class="col-sm-4">Контрагент</dt>
                 <dd class="col-sm-8">{{ partner.name }}</dd>
-                <dt class="col-sm-4">Інкотермс</dt>
-                <dd class="col-sm-8">{{ order.incoterm }}</dd>
+                <dt class="col-sm-4">Дата створення</dt>
+                <dd class="col-sm-8">{{ order.create_date.strftime('%d/%m/%Y') }}</dd>
+                <dt class="col-sm-4">Термін поставки</dt>
+                <dd class="col-sm-8">{{ order.deadline_date.strftime('%d/%m/%Y') }}</dd>
                 <dt class="col-sm-4">Умови оплати</dt>
-                <dd class="col-sm-8">{{ order.payment_term }}</dd>
+                <dd class="col-sm-8">{% if order.payment_term=='on_invoice' %}Передплата{% else %}Післяплата{% endif %}</dd>
+                <dt class="col-sm-4">Стан</dt>
+                <dd class="col-sm-8"><span class="badge text-bg-secondary">{{ order.state|upper }}</span></dd>
             </dl>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+        {% if order.type == 'purchase' %}
+            {% if order.state == 'await_payment' %}
+                <a href="{{ url_for('order_page.view_confirm_payment', order_id=order.id) }}" class="btn btn-sm btn-success">Оплату відправлено</a>
+            {% endif %}
+
+            {% if order.state == 'await_delivery' %}
+                <a href="{{ url_for('purchase_page.view_receive', order_id=order.id) }}" class="btn btn-sm btn-success">Вантаж прийшов, почати ресівінг</a>
+            {% endif %}
+
+            {% if order.state == 'draft' %}
+                <a href="{{ url_for('order_page.view_confirm', order_id=order.id) }}" onclick="return confirm('Підтвердити ордер?');" class="btn btn-sm btn-success">Підтвердити</a>
+            {% endif %}
+        {% endif %}
+
+        {% if order.state == 'draft' %}
+            <a href="{{ url_for('order_page.view_delete', order_id=order.id) }}" onclick="return confirm('Ви впевнені що бажаєте видалити?');" class="btn btn-sm btn-outline-danger">Видалити</a>
+        {% endif %}
+
         </div>
     </div>
     <br>
@@ -21,6 +47,7 @@
     <div class="row">
         <div class="col-12">
             <h5>Товари в ордері</h5>
+
             {% if moves %}
             <table class="table">
                 <thead>
@@ -31,6 +58,7 @@
                         <th>Модель</th>
                         <th>Ціна</th>
                         <th>Кількість</th>
+                        <th>Отримано</th>
                         <th>Загалом</th>
                     </tr>
                 </thead>
@@ -43,12 +71,13 @@
                         <td>{{ move.model }}</td>
                         <td>{{ move.unit_price }}</td>
                         <td>{{ move.qty_draft }}</td>
+                        <td>{{ move.qty_done }}</td>
                         <td>{{ move.amount }}</td>
                     </tr>
                 {% endfor %}
                     <tr>
-                        <td colspan="6" class="text-end text-info border-bottom-0">Всього</td>
-                        <td class="text-info fw-bold border-bottom-0">{{ total_amount }}</td>
+                        <td colspan="7" class="text-end border-bottom-0">Всього</td>
+                        <td class="text-{% if order.state == 'await_payment' %}danger{% elif order.state=='done' %}success{% else %}secondary{% endif %} fw-bold border-bottom-0">{{ total_amount }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -59,6 +88,7 @@
         </div>
     </div>
 
+    {% if order.state == 'draft' %}
     <div class="row">
         <div class="col-12">
             <h5>Додати в ордер</h5>
@@ -101,5 +131,6 @@
             {% endif %}
         </div>
     </div>
+    {% endif %}
 
 {% endblock %}

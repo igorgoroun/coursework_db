@@ -1,0 +1,31 @@
+{% extends 'layout.html' %}
+
+{% block pagetitle %}{{ page_title }}{% endblock %}
+
+{% block content %}
+    <h2>{{ page_title }} по ордеру №{{ order.id }}</h2>
+
+
+    <form action="" method="post" class="">
+        <table class="table" role="table">
+            <tr>
+                <th>Артикул</th>
+                <th>Очікувана кількість</th>
+                <th>Отримана кількість</th>
+            </tr>
+
+        <input type="hidden" name="order_id" value="{{ order.id }}">
+        {% for move in moves %}
+            <input type="hidden" name="move_id" value="{{ move.id }}">
+            <tr>
+                <td>{{ move.product_id }}</td>
+                <td>{{ move.qty_draft }}</td>
+                <td><input type="text" class="form-control" name="qty_done" value="{{ move.qty_draft }}"></td>
+            </tr>
+        {% endfor %}
+        </table>
+        <button type="submit" class="btn btn-primary">Підтвердити отримання</button>
+    </form>
+
+
+{% endblock %}

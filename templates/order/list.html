@@ -10,8 +10,9 @@
             <tr>
                 <th>ID</th>
                 <th>Постачальник</th>
-                <th>Incoterms</th>
-                <th>Тип сплати</th>
+                <th>Дата створення</th>
+                <th>Термін поставки</th>
+                <th>Тип оплати</th>
                 <th>Вартість</th>
                 <th>Стан</th>
                 <th></th>
@@ -22,13 +23,13 @@
             <tr>
                 <td>{{ order.id }}</td>
                 <td>{{ order.partner_name }}</td>
-                <td>{{ order.incoterm }}</td>
-                <td>{{ order.payment_term }}</td>
+                <td>{{ order.create_date.strftime('%d/%m/%Y') }}</td>
+                <td>{{ order.deadline_date.strftime('%d/%m/%Y') }}</td>
+                <td>{% if order.payment_term=='on_invoice' %}Передплата{% else %}Післяплата{% endif %}</td>
                 <td>{{ order.total_amount or 0.0 }}</td>
-                <td><span class="badge text-bg-secondary">{{ order.state }}</span></td>
+                <td><span class="badge text-bg-{% if order.state == 'done' %}success{% elif order.state != 'draft' %}primary{% else %}secondary{% endif %}">{{ order.state }}</span></td>
                 <td class="text-end">
-                    <a href="{{ url_for('order_page.view_detail', order_id=order.id) }}" class="btn btn-sm btn-outline-primary">Деталі</a>
-                    <a href="{{ url_for('order_page.view_delete', order_id=order.id) }}" onclick="return confirm('Ви впевнені що бажаєте видалити?');" class="btn btn-sm btn-outline-danger">Видалити</a>
+                    <a href="{{ url_for('order_page.view_detail', order_id=order.id) }}" class="btn btn-sm btn-outline-dark">Деталі</a>
                 </td>
             </tr>
         {% endfor %}

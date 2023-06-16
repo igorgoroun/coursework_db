@@ -25,7 +25,7 @@
                     <ul class="me-auto"></ul>
                     <ul class="navbar-nav mb-2 mb-lg-0 text-end">
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('purchase_page.view_list') }}">Закупки</a>
+                            <a class="nav-link" href="{{ url_for('purchase_page.view_list') }}">Закупівлі</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Продаж</a>
@@ -43,7 +43,7 @@
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Товари</a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="{{ url_for('product_page.view_list') }}">Перелік товарів</a></li>
-                                <li><a class="dropdown-item" href="#">Залишки</a></li>
+                                <li><a class="dropdown-item" href="{{ url_for('stock_page.view_stock') }}">Залишки</a></li>
                                 <li><h6 class="dropdown-header">Довідники</h6></li>
                                 <li><a class="dropdown-item" href="{{ url_for('category_page.view_list') }}">Категорії</a></li>
                                 <li><a class="dropdown-item" href="{{ url_for('brand_page.view_list') }}">Бренди</a></li>
